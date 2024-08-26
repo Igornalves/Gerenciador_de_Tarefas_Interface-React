@@ -27,3 +27,11 @@ export const DivInputeButton = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const DivTasksUsers = styled.div`
+    width: 100%;
+    height: 824px;
+    display: flex;
+    justify-content: center;
+    /* background-color: red; */
+`

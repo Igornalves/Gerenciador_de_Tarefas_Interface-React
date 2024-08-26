@@ -1,10 +1,12 @@
+import { BoxTasks } from "../../components/BoxTask/intex";
 import ButtonSubmit from "../../components/ButtonSubmit/intex";
 import InputTask from "../../components/InputTask/intex";
 import { 
     Conteiner,
     DivCabecalho,
     TextHeading,
-    DivInputeButton
+    DivInputeButton,
+    DivTasksUsers
 } from "./style";
 
 export default function Home() {
@@ -19,7 +21,9 @@ export default function Home() {
                     <ButtonSubmit/>
                 </DivInputeButton>
             </DivCabecalho>
-          
+            <DivTasksUsers>
+                <BoxTasks />
+            </DivTasksUsers>
         </Conteiner>
     );
 }
