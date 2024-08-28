@@ -34,6 +34,8 @@ export function BoxTasks() {
 
             </DivTask>
             <Tasks/>
+            <Tasks/>
+            <Tasks/>
         </BoxTask>
     )
 }
