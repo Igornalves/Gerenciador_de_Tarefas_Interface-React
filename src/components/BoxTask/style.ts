@@ -46,5 +46,21 @@ export const DivText = styled.div`
 `
 
 export const DivTask = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 24px;
+`
+
+export const TextMenssageErro = styled.text`
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: ${defaultTheme.fontSizes.xs};
+    margin-top: 16px;
+`
+
+export const TextMessageSubtext = styled.text`
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
 `
