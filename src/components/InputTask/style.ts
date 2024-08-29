@@ -10,6 +10,6 @@ export const Input = styled.input`
     padding-left: 18px;
 
     :focus {
-        border-color: ${defaultTheme.colors.principal.purpleBase};
+        border-color: ${defaultTheme.colors.principal.purpleDark};
     }
 `
