@@ -6,7 +6,6 @@ import {
     Text,
     TextNumber,
     DivText,
-    TextNumberSucess,
     DivTask,
     TextMenssageErro,
     TextMessageSubtext
@@ -14,7 +13,6 @@ import {
 import { LuClipboardList } from "react-icons/lu";
 import { Tasks } from "../Tasks/intex";
 import { defaultTheme } from "../../global/styles/default";
-
 
 export function BoxTasks() {
 
@@ -41,14 +39,14 @@ export function BoxTasks() {
                         {task.length}
                     </TextNumber>
                 </DivText>
-                <DivText>
+                {/* <DivText>
                     <Text>
                         Concluidas
                     </Text>
                     <TextNumberSucess>
                         0
                     </TextNumberSucess>
-                </DivText>
+                </DivText> */}
             </DivTextInfo>
             <DivTask>
                 {task.length === 0 ? 

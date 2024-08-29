@@ -11,7 +11,7 @@ export const BoxTask = styled.div`
 export const DivTextInfo = styled.div`
     /* background-color: red; */
     display:flex;
-    justify-content: space-between;
+    justify-content: center;
 `
 
 export const Text = styled.text`

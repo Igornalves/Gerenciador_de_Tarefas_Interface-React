@@ -19,7 +19,6 @@ export function Tasks({ Descricao, concluido = false }: typeText) {
       const resultado = !concluido
       console.log(resultado)
    }
-
    
    return(
     <Conteiner>

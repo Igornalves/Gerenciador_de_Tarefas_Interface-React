@@ -1,6 +1,7 @@
 import { BoxTasks } from "../../components/BoxTask/intex";
 import ButtonSubmit from "../../components/ButtonSubmit/intex";
 import InputTask from "../../components/InputTask/intex";
+import UsersProfile from "../../components/UsersProfile/intex";
 import { 
     Conteiner,
     DivCabecalho,
@@ -16,6 +17,7 @@ export default function Home() {
                 <TextHeading>
                     Gerenciador de tarefas
                 </TextHeading>
+                <UsersProfile/>
                 <DivInputeButton>
                     <InputTask/>
                     <ButtonSubmit/>
