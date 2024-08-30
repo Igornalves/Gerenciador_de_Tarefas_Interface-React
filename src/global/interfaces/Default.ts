@@ -4,6 +4,7 @@ export interface typeText {
     concluido?: boolean
     onToggle: () => void
     onDelete: () => void
+    Data: String
 }
 
 export interface InputAndButtonSubmitTaskProps {

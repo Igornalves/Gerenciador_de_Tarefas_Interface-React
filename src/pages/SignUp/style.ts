@@ -30,7 +30,7 @@ export const ImgParaFundo = styled.img`
     height: 570px;
     position: relative;
     top: 70px;
-    right: -140px;
+    right: -100px;
 `
 
 export const Titule = styled.text`

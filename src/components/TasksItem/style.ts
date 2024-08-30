@@ -25,8 +25,8 @@ export const Button = styled.button`
     border: 0px;
     width: 34px;
     height: 34px;
-    margin-right: 12px;
-    margin-bottom: 15px;
+    margin-left: 85px;
+    margin-bottom: 8px;
     background-color: transparent;
 
     :hover{
@@ -50,4 +50,17 @@ export const DivdoConteudo = styled.div`
     justify-content: space-between;
     /* background-color: red; */
     margin-left: 12px;
+`
+
+export const DivButtonAndData = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+`
+
+export const TextData = styled.text`
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 10px;
 `

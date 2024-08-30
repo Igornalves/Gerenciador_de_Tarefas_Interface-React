@@ -17,13 +17,14 @@ import InputAndButtonSubmitTask from "../InputAndButtonSubmitTask/intex";
 
 export default function BoxTasks() {
 
-    const [tasks, setTasks] = useState<{ id: string; Descricao: string; concluido: boolean }[]>([]);
+    const [tasks, setTasks] = useState<{ id: string; Descricao: string; concluido: boolean, Data: String }[]>([]);
 
     function addTask (taskDescription: string) {
         const newTask = {
             id: (tasks.length + 1).toString(),
             Descricao: taskDescription,
             concluido: false,
+            Data: new Date().toDateString().toString()
         };
         setTasks([...tasks, newTask]);
     };
@@ -77,6 +78,7 @@ export default function BoxTasks() {
                       concluido={task.concluido}
                       onToggle={() => toggleTaskCompletion(task.id)}
                       onDelete={() => deleteTask(task.id)}
+                      Data={task.Data}
                     />
                   ))
                 }

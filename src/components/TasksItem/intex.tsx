@@ -3,13 +3,15 @@ import {
    InputCheckBox,
    TextConteudo,
    Button,
-   DivdoConteudo
+   DivdoConteudo,
+   TextData,
+   DivButtonAndData
 } from "./style";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { typeText } from "../../global/interfaces/Default";
 import { useState } from "react";
 
-export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete }: typeText) {
+export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete, Data }: typeText) {
 
    const [isChecked, setIsChecked] = useState(false)
    
@@ -37,12 +39,16 @@ export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete
          }}>
             {Descricao}
          </TextConteudo>
-         <Button onClick={ onDelete }>
-            <RiDeleteBin6Line 
-               size={18}
-            />
-         </Button>
-         
+         <DivButtonAndData>
+            <Button onClick={ onDelete }>
+               <RiDeleteBin6Line 
+                  size={18}
+               />
+            </Button>
+            <TextData>
+               {Data}
+            </TextData>
+         </DivButtonAndData>
       </DivdoConteudo>
     </Conteiner>
    ) 
