@@ -1,27 +1,23 @@
-import { FaCircleUser } from "react-icons/fa6";
 import { 
-    Conteiner,
-    Text,
     TextNome,
-    DivText
+    DivText,
+    ConteinerButton
 } from "./styles";
 import { defaultTheme } from "../../global/styles/default";
+import { BiLogOut } from "react-icons/bi";
 
-export default function UsersProfile() {
+export default function Logout() {
     return(
-        <Conteiner>
-          <FaCircleUser 
+        <ConteinerButton>
+          <BiLogOut 
             size={40}
             color={defaultTheme.colors.principal.greenDark}
           />
           <DivText>
-            <Text>
-                Olá,
-            </Text>
             <TextNome>
-                Igor Nascimento
+              Logout
             </TextNome>
           </DivText>
-        </Conteiner>
+        </ConteinerButton>
     );
 }

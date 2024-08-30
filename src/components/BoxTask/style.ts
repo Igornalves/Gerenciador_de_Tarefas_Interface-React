@@ -4,7 +4,7 @@ import { defaultTheme } from "../../global/styles/default";
 export const BoxTask = styled.div`
     width: 745px;
     height: 454px;
-    margin-top: 66px;
+    margin-top: 18px;
     /* background-color: red;  */
 `
 
@@ -31,14 +31,12 @@ export const TextNumber = styled.text`
     margin-left: 8px;
 `
 
-export const TextNumberSucess = styled.text`
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 700;
-    background-color: ${defaultTheme.colors.principal.greenLight};
-    color: ${defaultTheme.colors.principal.greenDark};
-    padding: 5px;
-    border-radius: 99px;
-    margin-left: 8px;
+export const DivInputeButton = styled.div`
+    position: relative;
+    top: -45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 export const DivText = styled.div`

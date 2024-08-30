@@ -9,8 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { typeText } from "../../global/interfaces/Default";
 import { useState } from "react";
 
-
-export function Tasks({ Descricao, concluido = false }: typeText) {
+export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete }: typeText) {
 
    const [isChecked, setIsChecked] = useState(false)
    
@@ -18,11 +17,13 @@ export function Tasks({ Descricao, concluido = false }: typeText) {
       setIsChecked(!isChecked)
       const resultado = !concluido
       console.log(resultado)
+      onToggle()
    }
    
    return(
     <Conteiner>
       <InputCheckBox
+         id={id}
          type="checkbox"
          size={18}
          checked={isChecked}
@@ -36,8 +37,7 @@ export function Tasks({ Descricao, concluido = false }: typeText) {
          }}>
             {Descricao}
          </TextConteudo>
-         <Button
-         >
+         <Button onClick={ onDelete }>
             <RiDeleteBin6Line 
                size={18}
             />

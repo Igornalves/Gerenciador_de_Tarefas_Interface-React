@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { 
     BoxTask,
     DivTextInfo,
@@ -8,48 +6,57 @@ import {
     DivText,
     DivTask,
     TextMenssageErro,
-    TextMessageSubtext
+    TextMessageSubtext,
+    DivInputeButton
 } from "./style";
 import { LuClipboardList } from "react-icons/lu";
-import { Tasks } from "../Tasks/intex";
 import { defaultTheme } from "../../global/styles/default";
+import { TasksItem } from "../TasksItem/intex";
+import { useState } from "react";
+import InputAndButtonSubmitTask from "../InputAndButtonSubmitTask/intex";
 
-export function BoxTasks() {
+export default function BoxTasks() {
 
-    const [task] = useState([
-        <Tasks
-            Descricao={'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer'}
-        />,
-        <Tasks
-            Descricao={'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer'}
-        />,
-        <Tasks
-            Descricao={'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer'}
-        />,
-    ])
+    const [tasks, setTasks] = useState<{ id: string; Descricao: string; concluido: boolean }[]>([]);
 
+    function addTask (taskDescription: string) {
+        const newTask = {
+        id: (tasks.length + 1).toString(),
+        Descricao: taskDescription,
+        concluido: false,
+        };
+        setTasks([...tasks, newTask]);
+    };
+    
+    function toggleTaskCompletion (id: string) {
+        setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+            task.id === id ? { ...task, concluido: !task.concluido } : task
+        )
+        );
+    };
+    
+    function deleteTask (id: string) {
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    };
+    
     return(
         <BoxTask>
+            <DivInputeButton>
+                <InputAndButtonSubmitTask onAddTask={addTask}/> 
+            </DivInputeButton>
             <DivTextInfo>
                 <DivText>
                     <Text>
                         Tarefas Criadas
                     </Text>
                     <TextNumber>
-                        {task.length}
+                        {tasks.length}
                     </TextNumber>
                 </DivText>
-                {/* <DivText>
-                    <Text>
-                        Concluidas
-                    </Text>
-                    <TextNumberSucess>
-                        0
-                    </TextNumberSucess>
-                </DivText> */}
             </DivTextInfo>
             <DivTask>
-                {task.length === 0 ? 
+                {tasks.length === 0 ? 
                     <>
                         <LuClipboardList
                             size={65} 
@@ -62,8 +69,19 @@ export function BoxTasks() {
                             Crie tarefas e organize seus itens a fazer
                         </TextMessageSubtext>
                     </>
-                : task}
+                : tasks.map((task) => (
+                    <TasksItem
+                      key={task.id}
+                      id={task.id}
+                      Descricao={task.Descricao}
+                      concluido={task.concluido}
+                      onToggle={() => toggleTaskCompletion(task.id)}
+                      onDelete={() => deleteTask(task.id)}
+                    />
+                  ))
+                }
             </DivTask>
         </BoxTask>
     )
 }
+
