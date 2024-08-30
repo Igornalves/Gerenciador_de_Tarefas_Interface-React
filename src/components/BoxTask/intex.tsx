@@ -21,9 +21,9 @@ export default function BoxTasks() {
 
     function addTask (taskDescription: string) {
         const newTask = {
-        id: (tasks.length + 1).toString(),
-        Descricao: taskDescription,
-        concluido: false,
+            id: (tasks.length + 1).toString(),
+            Descricao: taskDescription,
+            concluido: false,
         };
         setTasks([...tasks, newTask]);
     };
