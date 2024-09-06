@@ -96,7 +96,7 @@ export const InputPassword = styled.input`
     }
 `
 
-export const Text = styled.text`
+export const Text = styled.span`
     margin-right: 5px;
 `
 
