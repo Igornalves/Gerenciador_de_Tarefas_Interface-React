@@ -11,12 +11,15 @@ api.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-api.interceptors.response.use((response) => {
-    console.log("DADOS RECEBIDOS => ",response.data) 
-    return response;
-}, (error) => {
-    console.log("INTERCEPTOR RESPONSE ERROR => ",error) 
-    return Promise.reject(error);
-});
+api.interceptors.response.use(
+    response => {
+        console.log("DADOS RECEBIDOS =>", response.data);
+        return response;
+    },
+    error => {
+        console.error('INTERCEPTOR RESPONSE ERROR =>', error);
+        return Promise.reject(error);
+    }
+);  
 
 export { api }

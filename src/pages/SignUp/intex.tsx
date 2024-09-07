@@ -18,15 +18,75 @@ import {
     InputConfirmPassword
 } from "./style";
 import { useNavigate } from "react-router-dom";
-
 import imgParaFundo2 from '../../assets/Other 07.png'
+import { api } from "../../service/api";
+import { useState } from "react";
+
+interface User {
+    nome: string;
+    username: string;
+    email: string;
+    password: string;
+}
 
 export default function SignUp() {
 
-    const Navigation = useNavigate()
+    const navigate = useNavigate();
+    
+    const [formData, setFormData] = useState<User>({
+        nome: '',
+        username: '',
+        email: '',
+        password: '',
+    });
 
-    function SubmitPageSignUp() {
-        Navigation('/signin')
+    const [confirmPassword, setConfirmPassword] = useState(''); 
+    // const [ setErrorMessage] = useState('');
+
+    function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setFormData({
+            ...formData,
+            password: e.target.value 
+        });
+    }
+
+    function handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setConfirmPassword(e.target.value); 
+    }
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const { nome, username, email, password } = formData;
+
+        if (!nome || !username || !email || password === undefined || confirmPassword === undefined) {
+            window.alert('Todos os campos devem ser preenchidos');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            window.alert('As senhas não coincidem');
+            return;
+        }
+
+        try {
+            const response = await api.post('/CriandoUser', formData);
+            console.log("Usuário criado com sucesso: ", response.data);
+
+            window.alert('Usuário cadastrado com sucesso!');
+
+            navigate('/signin');
+        } catch (error) {
+            console.error("Erro ao criar usuário: ", error);
+            window.alert('Erro ao tentar cadastrar. Tente novamente mais tarde.');
+        }
     }
 
     return(
@@ -34,7 +94,7 @@ export default function SignUp() {
             <DivRetangulo> 
                 <ImgParaFundo src={imgParaFundo2} alt="img para fundo"/>
             </DivRetangulo>
-            <DivForms> 
+            <DivForms onSubmit={handleSubmit}> 
                 <Titule>
                     Por favor preencha o formulário para se inscrever!
                 </Titule>
@@ -42,32 +102,56 @@ export default function SignUp() {
                     <TextInput1>
                         Nome Completo:
                     </TextInput1>
-                    <InputNomeCompleto type="text"/>
+                    <InputNomeCompleto 
+                        type="text" 
+                        name="nome" 
+                        value={formData.nome} 
+                        onChange={handleInputChange}
+                    />
                     <TextInput1>
                         Username:
                     </TextInput1>
-                    <InputUsername type="text"/>
+                    <InputUsername 
+                        type="text" 
+                        name="username" 
+                        value={formData.username} 
+                        onChange={handleInputChange}
+                    />
                     <TextInput1>
                         Email:
                     </TextInput1>
-                    <InputEmail type="text"/>
+                    <InputEmail 
+                        type="email" 
+                        name="email" 
+                        value={formData.email} 
+                        onChange={handleInputChange}
+                    />
                     <TextInput2>
                         Password:
                     </TextInput2>
-                    <InputPassword type="password" />
+                    <InputPassword 
+                        type="password" 
+                        name="password" 
+                        value={formData.password}
+                        onChange={handlePasswordChange}  
+                    />
                     <TextInput2>
                         Confirmar Password:
                     </TextInput2>
-                    <InputConfirmPassword type="password" />
+                    <InputConfirmPassword 
+                        type="password" 
+                        value={confirmPassword} 
+                        onChange={handleConfirmPasswordChange} 
+                    />
                 </DivFormsInput>
-                <ButtonSubmit>
+                <ButtonSubmit type="submit">
                     Cadastre-se
                 </ButtonSubmit>
                 <DivLinkRegister>
                     <Text>
                         Sim, eu tenho uma conta?
                     </Text>
-                    <LinkRegister onClick={SubmitPageSignUp}>
+                    <LinkRegister onClick={() => navigate('/signin')}>
                         Conecte-se
                     </LinkRegister>
                 </DivLinkRegister>

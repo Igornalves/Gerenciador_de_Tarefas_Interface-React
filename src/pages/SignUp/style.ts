@@ -15,7 +15,7 @@ export const DivRetangulo = styled.div`
     background-color: ${defaultTheme.colors.principal.purpleDark};
 `
 
-export const DivForms = styled.div`
+export const DivForms = styled.form`
     /* background-color: red; */
     width: 900px;
     display: flex;

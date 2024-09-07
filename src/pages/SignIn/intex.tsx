@@ -24,36 +24,39 @@ import axios from "axios";
 export default function SignIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const Navigation = useNavigate()
-    
-    async function handleSubmit() {
+    const [error] = useState('');
+    const Navigation = useNavigate();
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
         if (!username || !password) {
-            console.log('Por favor, preencha todos os campos.');
+            window.alert('Por favor, preencha todos os campos.');
             return;
         }
-        
+
         try {
-            const response = await api.post('/users/listagem', { 
+            const response = await api.post('/login', { 
                 username, 
                 password 
             });
-            Navigation('/')
-            console.log('Login success:', response.data());
+            window.alert('Login bem-sucedido!');
+            Navigation('/');
+            console.log('Login success:', response.data);
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.log('Login error:', error.response ? error.response.data : error.message);
-                setError('Erro ao tentar fazer login. Tente novamente mais tarde.');
+                window.alert('Erro ao tentar fazer login. Verifique suas credenciais e tente novamente.');
             } else {
-                console.log('Login error:', error);
-                setError('Erro desconhecido. Tente novamente mais tarde.');
+                window.alert('Erro desconhecido. Tente novamente mais tarde.');
+                console.log('Login error:', error);            
             }
         }
-    }     
+    }
 
     function SubmitPageSignUp() {
-        Navigation('/signup')
+        Navigation('/signup');
     }
 
     return(

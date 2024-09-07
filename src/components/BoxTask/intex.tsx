@@ -24,14 +24,18 @@ interface Task {
 }
 
 export default function BoxTasks() {
-
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do armazenamento local
 
     useEffect(() => {
-        api.get('/tasks/listagem')
+        api.get('/tasks/listagem', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
         .then(response => {
-            const { tasks } = response.data; // Extrair 'tasks' da resposta
+            const { tasks } = response.data;
             if (Array.isArray(tasks)) {
                 setTasks(tasks);
             } else {
@@ -46,13 +50,22 @@ export default function BoxTasks() {
     }, []);
 
     function addTask(taskDescription: string) {
+        if (!userId) {
+            setError("Usuário não autenticado");
+            return;
+        }
+
         api.post('/CriandoTasks', {
             descricao: taskDescription,
             concluida: false,
-            userId: "uuid-do-usuario" 
+            userId
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         })
         .then(response => {
-            const { task } = response.data; // Extrair 'task' da resposta
+            const { task } = response.data;
             if (task && task.id) {
                 setTasks(prevTasks => [...prevTasks, task]); 
             } else {
@@ -74,7 +87,11 @@ export default function BoxTasks() {
     }
 
     function deleteTask(id: string) {
-        api.delete(`/tasks/deletando/${id}`)
+        api.delete(`/tasks/deletando/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
         .then(() => {
             setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
         })
