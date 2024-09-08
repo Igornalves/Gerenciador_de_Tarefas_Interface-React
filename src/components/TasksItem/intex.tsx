@@ -9,19 +9,49 @@ import {
 } from "./style";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { typeText } from "../../global/interfaces/Default";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "../../service/api";
 
-export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete, Data }: typeText) {
+export function TasksItem({ id, Descricao, concluido, onToggle, onDelete, createdAt }: typeText) {
 
-   const [isChecked, setIsChecked] = useState(false)
-   
-   function handleCheckboxChange() {
-      setIsChecked(!isChecked)
-      const resultado = !concluido
-      console.log(resultado)
-      onToggle()
+   const [isChecked, setIsChecked] = useState(concluido);
+
+   useEffect(() => {
+      async function fetchTaskStatus() {
+         try {
+            const response = await api.get('/tasks/listagem');
+            const { tasks } = response.data; 
+
+            const currentTask = tasks.find((task: any) => task.id === id);
+
+            if (currentTask && currentTask.concluida === true) {
+               setIsChecked(true);
+            } else {
+               setIsChecked(false);
+            }
+         } catch (error) {
+            console.error("Erro ao buscar o estado das tarefas:", error);
+         }
+      }
+
+      fetchTaskStatus();
+   }, [id]);
+
+   async function handleCheckboxChange() {
+      const newCheckedState = !isChecked;
+      setIsChecked(newCheckedState);
+
+      try {
+         await api.patch(`/tasks/editar/${id}`, {
+            concluida: newCheckedState
+         });
+         onToggle(newCheckedState);
+      } catch (error) {
+         console.error("Erro ao atualizar a tarefa:", error);
+         setIsChecked(isChecked);
+      }
    }
-   
+
    return(
     <Conteiner>
       <InputCheckBox
@@ -29,12 +59,10 @@ export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete
          type="checkbox"
          size={18}
          checked={isChecked}
-         //Faz com que o estado do checkbox seja controlado pelo React, com o valor do checkbox sincronizado com o estado isChecked
          onChange={handleCheckboxChange}
       />
       <DivdoConteudo>
          <TextConteudo style={{
-            // colocando a escolha para a mudanca de text quando clicado na caixa
             textDecoration: isChecked ? 'line-through' : 'none'
          }}>
             {Descricao}
@@ -46,7 +74,7 @@ export function TasksItem({ id, Descricao, concluido = false, onToggle, onDelete
                />
             </Button>
             <TextData>
-               {Data}
+               {new Date(createdAt).toLocaleDateString()}
             </TextData>
          </DivButtonAndData>
       </DivdoConteudo>

@@ -1,10 +1,10 @@
 export interface typeText {
-    id: string
-    Descricao: String
-    concluido?: boolean
-    onToggle: () => void
-    onDelete: () => void
-    Data: String
+    id: string;
+    Descricao: string;
+    concluido?: boolean;
+    onToggle: (newState: boolean) => void; // Passa o novo estado como argumento
+    onDelete: () => void;
+    createdAt: string;
 }
 
 export interface InputAndButtonSubmitTaskProps {

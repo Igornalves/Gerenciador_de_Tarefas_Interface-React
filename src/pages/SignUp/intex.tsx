@@ -82,7 +82,7 @@ export default function SignUp() {
 
             window.alert('Usuário cadastrado com sucesso!');
 
-            navigate('/signin');
+            navigate('/');
         } catch (error) {
             console.error("Erro ao criar usuário: ", error);
             window.alert('Erro ao tentar cadastrar. Tente novamente mais tarde.');
@@ -151,7 +151,7 @@ export default function SignUp() {
                     <Text>
                         Sim, eu tenho uma conta?
                     </Text>
-                    <LinkRegister onClick={() => navigate('/signin')}>
+                    <LinkRegister onClick={() => navigate('/')}>
                         Conecte-se
                     </LinkRegister>
                 </DivLinkRegister>

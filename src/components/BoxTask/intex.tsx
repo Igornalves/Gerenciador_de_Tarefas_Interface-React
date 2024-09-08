@@ -16,22 +16,45 @@ import { useEffect, useState } from "react";
 import InputAndButtonSubmitTask from "../InputAndButtonSubmitTask/intex";
 import { api } from "../../service/api";
 
+interface User {
+    id: string;
+    username: string;
+}
+
 interface Task {
     id: string;
-    Descricao: string;
+    descricao: string;
     concluido: boolean;
     Data: string;
+    createdAt: string;
+    user: User;
 }
 
 export default function BoxTasks() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do armazenamento local
+    const [userAuthenticated, setUserAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        const expiration = localStorage.getItem('authToken');
+        const currentTime = Date.now();
+
+        if (!token || !expiration || currentTime > Number(expiration)) {
+            setError("Sessão expirada ou usuário não autenticado");
+            return;
+        }
+
+        setUserAuthenticated(true); // Define o usuário como autenticado
+
+        fetchTasks(token);
+    }, []);
+
+    function fetchTasks(token: string) {
+        // Faz a requisição para obter as tarefas
         api.get('/tasks/listagem', {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             }
         })
         .then(response => {
@@ -47,21 +70,24 @@ export default function BoxTasks() {
             console.error("Erro ao listar tarefas: ", error);
             setError("Erro ao carregar tarefas");
         });
-    }, []);
+    }
 
     function addTask(taskDescription: string) {
-        if (!userId) {
+        const token = localStorage.getItem('authToken');
+        const userId = localStorage.getItem('userId'); // Obtenha o userId do localStorage
+    
+        if (!token || !userId) {
             setError("Usuário não autenticado");
             return;
         }
-
-        api.post('/CriandoTasks', {
+    
+        api.post('/CriandoTasks', { 
             descricao: taskDescription,
             concluida: false,
-            userId
+            userId: userId // Inclua o userId na solicitação
         }, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             }
         })
         .then(response => {
@@ -78,18 +104,42 @@ export default function BoxTasks() {
         });
     }
 
-    function toggleTaskCompletion(id: string) {
+    function toggleTaskCompletion(id: string, newState: boolean) {
+        // Atualiza o estado local
         setTasks(prevTasks =>
             prevTasks.map(task =>
-                task.id === id ? { ...task, concluido: !task.concluido } : task
+                task.id === id ? { ...task, concluido: newState } : task
             )
         );
+
+        // Envia a atualização para a API
+        api.patch(`/tasks/editar/${id}`, {
+            concluida: newState
+        })
+        .then(response => {
+            console.log("Tarefa atualizada com sucesso:", response.data);
+        })
+        .catch(error => {
+            console.error("Erro ao atualizar a tarefa:", error);
+            // Se a atualização falhar, reverte o estado local
+            setTasks(prevTasks =>
+                prevTasks.map(task =>
+                    task.id === id ? { ...task, concluido: !newState } : task
+                )
+            );
+        });
     }
 
     function deleteTask(id: string) {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            setError("Usuário não autenticado");
+            return;
+        }
+
         api.delete(`/tasks/deletando/${id}`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             }
         })
         .then(() => {
@@ -97,6 +147,7 @@ export default function BoxTasks() {
         })
         .catch(error => {
             console.error("Erro ao deletar tarefa: ", error);
+            setError("Erro ao deletar tarefa");
         });
     }
     
@@ -136,11 +187,11 @@ export default function BoxTasks() {
                         <TasksItem
                           key={task.id}
                           id={task.id}
-                          Descricao={task.Descricao}
+                          Descricao={task.descricao}
                           concluido={task.concluido}
-                          onToggle={() => toggleTaskCompletion(task.id)}
+                          onToggle={(newState) => toggleTaskCompletion(task.id, newState)}
                           onDelete={() => deleteTask(task.id)}
-                          Data={task.Data}
+                          createdAt={task.createdAt}
                         />
                     ))
                 )}
@@ -148,4 +199,3 @@ export default function BoxTasks() {
         </BoxTask>
     )
 }
-

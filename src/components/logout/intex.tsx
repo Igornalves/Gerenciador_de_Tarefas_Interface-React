@@ -11,7 +11,7 @@ export default function Logout() {
   const navigate = useNavigate();
 
   function ClickButton() {
-    navigate('/signin')
+    navigate('/')
   }
 
   return(
