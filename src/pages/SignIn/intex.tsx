@@ -21,6 +21,7 @@ import { api } from "../../service/api";
 import { useState } from "react";
 import axios from "axios";
 
+// Interface para tratar erros da API
 interface ApiError {
     response?: {
         data: any;
@@ -28,12 +29,34 @@ interface ApiError {
     message?: string;
 }
 
+// Função para salvar o token, tempo de expiração e userId no localStorage
 function saveToken(token: string, expiresIn: number, userId: string) {
     const expirationTime = Date.now() + expiresIn * 1000; 
     localStorage.setItem('authToken', token);
     localStorage.setItem('authTokenExpiration', expirationTime.toString()); 
     localStorage.setItem('userId', userId);
 }
+
+// Função para verificar se o token ainda é válido
+function isTokenValid(): boolean {
+    const expirationTime = localStorage.getItem('authTokenExpiration');
+    if (!expirationTime) return false;
+    return Date.now() < parseInt(expirationTime);
+}
+
+// Componente de erro para exibir mensagens de erro de forma estilizada
+const ErrorMessage = ({ message }: { message: string }) => (
+    <div style={{ 
+        color: 'red', 
+        marginTop: '10px', 
+        textAlign: 'center', 
+        backgroundColor: '#f8d7da', 
+        padding: '10px', 
+        borderRadius: '5px' 
+    }}>
+        {message}
+    </div>
+);
 
 export default function SignIn() {
     const [username, setUsername] = useState<string>('');
@@ -55,8 +78,8 @@ export default function SignIn() {
                 password
             });
     
-            const { token, expiresIn, userId } = response.data; // Suponha que `userId` é retornado pela API
-            saveToken(token, expiresIn, userId); // Passa userId para a função saveToken
+            const { token, expiresIn, userId } = response.data; 
+            saveToken(token, expiresIn, userId);
     
             window.alert('Login bem-sucedido!');
             navigate('/home');
@@ -107,7 +130,7 @@ export default function SignIn() {
                             onChange={(e) => setPassword(e.target.value)} 
                         />
                     </DivFormsInput>
-                    {error && <div style={{ color: 'red' }}>{error}</div>} 
+                    {error && <ErrorMessage message={error} />} 
                     <ButtonSubmit type="submit">
                         Login
                     </ButtonSubmit>

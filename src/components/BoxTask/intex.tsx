@@ -22,9 +22,9 @@ interface User {
 }
 
 interface Task {
+    concluida: boolean;
     id: string;
     descricao: string;
-    concluido: boolean;
     Data: string;
     createdAt: string;
     user: User;
@@ -52,7 +52,7 @@ export default function BoxTasks() {
     }, []);
 
     function fetchTasks(token: string) {
-        api.get('/tasks/listagem', {
+        api.get(`/tasks/listagem`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -72,30 +72,31 @@ export default function BoxTasks() {
             setError("Erro ao carregar tarefas");
         });
     }
-
+    
     function addTask(taskDescription: string) {
         const token = localStorage.getItem('authToken');
-        const userId = localStorage.getItem('userId');
         
-        console.log('Token:', token);
-        console.log('User ID:', userId);
-    
-        if (!token || !userId) {
+        if (!token) {
             setError("Usuário não autenticado");
             return;
         }
-    
+
+        // Verifique se a descrição da tarefa está presente
+        if (!taskDescription) {
+            setError("Descrição da tarefa não fornecida");
+            return;
+        }
+
         api.post('/CriandoTasks', { 
             descricao: taskDescription,
-            concluida: false,
-            userId: userId
+            concluida: false
         }, {
             headers: {
                 Authorization: `Bearer ${token}` 
             }
         })
         .then(response => {
-            const { createdTask } = response.data; 
+            const { createdTask } = response.data;
 
             if (createdTask && createdTask.id) {
                 setTasks(prevTasks => [...prevTasks, createdTask]);
@@ -176,7 +177,7 @@ export default function BoxTasks() {
                 </DivText>
             </DivTextInfo>
             <DivTask>
-            {error ? (
+                {error ? (
                     <TextMenssageErro>{error}</TextMenssageErro>
                 ) : tasks.length === 0 ? (
                     <>
@@ -197,7 +198,7 @@ export default function BoxTasks() {
                           key={task.id}
                           id={task.id}
                           Descricao={task.descricao}
-                          concluido={task.concluido}
+                          concluido={task.concluida}
                           onToggle={(newState) => toggleTaskCompletion(task.id, newState)}
                           onDelete={() => deleteTask(task.id)}
                           createdAt={task.createdAt}

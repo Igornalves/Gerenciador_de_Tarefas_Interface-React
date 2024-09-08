@@ -9,75 +9,56 @@ import {
 } from "./style";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { typeText } from "../../global/interfaces/Default";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "../../service/api";
 
 export function TasksItem({ id, Descricao, concluido, onToggle, onDelete, createdAt }: typeText) {
 
-   const [isChecked, setIsChecked] = useState(concluido);
+  const [isChecked, setIsChecked] = useState(concluido);
 
-   useEffect(() => {
-      async function fetchTaskStatus() {
-         try {
-            const response = await api.get('/tasks/listagem');
-            const { tasks } = response.data; 
+  // Remove useEffect que faz requisição desnecessária
 
-            const currentTask = tasks.find((task: any) => task.id === id);
+  async function handleCheckboxChange() {
+     const newCheckedState = !isChecked;
+     setIsChecked(newCheckedState);
 
-            if (currentTask && currentTask.concluida === true) {
-               setIsChecked(true);
-            } else {
-               setIsChecked(false);
-            }
-         } catch (error) {
-            console.error("Erro ao buscar o estado das tarefas:", error);
-         }
-      }
+     try {
+        await api.patch(`/tasks/editar/${id}`, {
+           concluida: newCheckedState
+        });
+        onToggle(newCheckedState);
+     } catch (error) {
+        console.error("Erro ao atualizar a tarefa:", error);
+        setIsChecked(isChecked); // Reverte o estado se a atualização falhar
+     }
+  }
 
-      fetchTaskStatus();
-   }, [id]);
-
-   async function handleCheckboxChange() {
-      const newCheckedState = !isChecked;
-      setIsChecked(newCheckedState);
-
-      try {
-         await api.patch(`/tasks/editar/${id}`, {
-            concluida: newCheckedState
-         });
-         onToggle(newCheckedState);
-      } catch (error) {
-         console.error("Erro ao atualizar a tarefa:", error);
-         setIsChecked(isChecked);
-      }
-   }
-
-   return(
-    <Conteiner>
-      <InputCheckBox
-         id={id}
-         type="checkbox"
-         size={18}
-         checked={isChecked}
-         onChange={handleCheckboxChange}
-      />
-      <DivdoConteudo>
-         <TextConteudo style={{
-            textDecoration: isChecked ? 'line-through' : 'none'
-         }}>
-            {Descricao}
-         </TextConteudo>
-         <DivButtonAndData>
-            <Button onClick={ onDelete }>
-               <RiDeleteBin6Line 
-                  size={18}
-               />
-            </Button>
-            <TextData>
-               {new Date(createdAt).toLocaleDateString()}
-            </TextData>
-         </DivButtonAndData>
-      </DivdoConteudo>
-    </Conteiner>
-   ) 
+  return(
+   <Conteiner>
+     <InputCheckBox
+        id={id}
+        type="checkbox"
+        size={18}
+        checked={isChecked}
+        onChange={handleCheckboxChange}
+     />
+     <DivdoConteudo>
+        <TextConteudo style={{
+           textDecoration: isChecked ? 'line-through' : 'none'
+        }}>
+           {Descricao}
+        </TextConteudo>
+        <DivButtonAndData>
+           <Button onClick={ onDelete }>
+              <RiDeleteBin6Line 
+                 size={18}
+              />
+           </Button>
+           <TextData>
+              {new Date(createdAt).toLocaleDateString()}
+           </TextData>
+        </DivButtonAndData>
+     </DivdoConteudo>
+   </Conteiner>
+  ) 
 }
