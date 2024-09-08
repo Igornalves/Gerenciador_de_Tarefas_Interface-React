@@ -38,11 +38,11 @@ function saveToken(token: string, expiresIn: number, userId: string) {
 }
 
 // Função para verificar se o token ainda é válido
-function isTokenValid(): boolean {
-    const expirationTime = localStorage.getItem('authTokenExpiration');
-    if (!expirationTime) return false;
-    return Date.now() < parseInt(expirationTime);
-}
+// function isTokenValid(): boolean {
+//     const expirationTime = localStorage.getItem('authTokenExpiration');
+//     if (!expirationTime) return false;
+//     return Date.now() < parseInt(expirationTime);
+// }
 
 // Componente de erro para exibir mensagens de erro de forma estilizada
 const ErrorMessage = ({ message }: { message: string }) => (
