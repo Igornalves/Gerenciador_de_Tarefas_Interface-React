@@ -21,7 +21,6 @@ import { api } from "../../service/api";
 import { useState } from "react";
 import axios from "axios";
 
-// Interface para tratar erros da API
 interface ApiError {
     response?: {
         data: any;
@@ -29,7 +28,6 @@ interface ApiError {
     message?: string;
 }
 
-// Função para salvar o token, tempo de expiração e userId no localStorage
 function saveToken(token: string, expiresIn: number, userId: string) {
     const expirationTime = Date.now() + expiresIn * 1000; 
     localStorage.setItem('authToken', token);
@@ -37,14 +35,12 @@ function saveToken(token: string, expiresIn: number, userId: string) {
     localStorage.setItem('userId', userId);
 }
 
-// Função para verificar se o token ainda é válido
 // function isTokenValid(): boolean {
 //     const expirationTime = localStorage.getItem('authTokenExpiration');
 //     if (!expirationTime) return false;
 //     return Date.now() < parseInt(expirationTime);
 // }
 
-// Componente de erro para exibir mensagens de erro de forma estilizada
 const ErrorMessage = ({ message }: { message: string }) => (
     <div style={{ 
         color: 'red', 

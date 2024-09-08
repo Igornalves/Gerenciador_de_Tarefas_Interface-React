@@ -16,8 +16,6 @@ export function TasksItem({ id, Descricao, concluido, onToggle, onDelete, create
 
   const [isChecked, setIsChecked] = useState(concluido);
 
-  // Remove useEffect que faz requisição desnecessária
-
   async function handleCheckboxChange() {
      const newCheckedState = !isChecked;
      setIsChecked(newCheckedState);
@@ -29,7 +27,7 @@ export function TasksItem({ id, Descricao, concluido, onToggle, onDelete, create
         onToggle(newCheckedState);
      } catch (error) {
         console.error("Erro ao atualizar a tarefa:", error);
-        setIsChecked(isChecked); // Reverte o estado se a atualização falhar
+        setIsChecked(isChecked); 
      }
   }
 
