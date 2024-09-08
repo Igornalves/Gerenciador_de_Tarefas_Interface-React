@@ -33,25 +33,25 @@ interface Task {
 export default function BoxTasks() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const [userAuthenticated, setUserAuthenticated] = useState<boolean>(false);
+    const [, setUserAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');
-        const expiration = localStorage.getItem('authToken');
+        const expiration = localStorage.getItem('authTokenExpiration');
         const currentTime = Date.now();
 
+        // Verificar expiração do token
         if (!token || !expiration || currentTime > Number(expiration)) {
             setError("Sessão expirada ou usuário não autenticado");
+            setUserAuthenticated(false);
             return;
         }
 
         setUserAuthenticated(true); // Define o usuário como autenticado
-
         fetchTasks(token);
     }, []);
 
     function fetchTasks(token: string) {
-        // Faz a requisição para obter as tarefas
         api.get('/tasks/listagem', {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -59,6 +59,7 @@ export default function BoxTasks() {
         })
         .then(response => {
             const { tasks } = response.data;
+
             if (Array.isArray(tasks)) {
                 setTasks(tasks);
             } else {
@@ -74,7 +75,10 @@ export default function BoxTasks() {
 
     function addTask(taskDescription: string) {
         const token = localStorage.getItem('authToken');
-        const userId = localStorage.getItem('userId'); // Obtenha o userId do localStorage
+        const userId = localStorage.getItem('userId');
+        
+        console.log('Token:', token);
+        console.log('User ID:', userId);
     
         if (!token || !userId) {
             setError("Usuário não autenticado");
@@ -84,44 +88,49 @@ export default function BoxTasks() {
         api.post('/CriandoTasks', { 
             descricao: taskDescription,
             concluida: false,
-            userId: userId // Inclua o userId na solicitação
+            userId: userId
         }, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}` 
             }
         })
         .then(response => {
-            const { task } = response.data;
-            if (task && task.id) {
-                setTasks(prevTasks => [...prevTasks, task]); 
+            const { createdTask } = response.data; 
+
+            if (createdTask && createdTask.id) {
+                setTasks(prevTasks => [...prevTasks, createdTask]);
             } else {
                 console.error("Resposta da API inválida: ", response.data);
+                setError("Erro ao criar tarefa");
             }
         })
         .catch(error => {
             console.error("Erro ao criar tarefa: ", error);
             setError("Erro ao criar tarefa");
         });
-    }
+    }    
 
     function toggleTaskCompletion(id: string, newState: boolean) {
-        // Atualiza o estado local
         setTasks(prevTasks =>
             prevTasks.map(task =>
                 task.id === id ? { ...task, concluido: newState } : task
             )
         );
 
-        // Envia a atualização para a API
         api.patch(`/tasks/editar/${id}`, {
             concluida: newState
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('authToken')}` // Autorização
+            }
         })
         .then(response => {
             console.log("Tarefa atualizada com sucesso:", response.data);
         })
         .catch(error => {
             console.error("Erro ao atualizar a tarefa:", error);
-            // Se a atualização falhar, reverte o estado local
+            setError("Erro ao atualizar tarefa");
+            // Reverter o estado local em caso de falha
             setTasks(prevTasks =>
                 prevTasks.map(task =>
                     task.id === id ? { ...task, concluido: !newState } : task

@@ -8,10 +8,17 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export default function Logout() {
+  
   const navigate = useNavigate();
 
+  function handleLogout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('authTokenExpiration');
+    navigate('/');
+  }
+
   function ClickButton() {
-    navigate('/')
+    handleLogout();
   }
 
   return(

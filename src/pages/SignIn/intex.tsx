@@ -28,8 +28,11 @@ interface ApiError {
     message?: string;
 }
 
-function saveToken(token: string) {
+function saveToken(token: string, expiresIn: number, userId: string) {
+    const expirationTime = Date.now() + expiresIn * 1000; 
     localStorage.setItem('authToken', token);
+    localStorage.setItem('authTokenExpiration', expirationTime.toString()); 
+    localStorage.setItem('userId', userId);
 }
 
 export default function SignIn() {
@@ -40,26 +43,26 @@ export default function SignIn() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
+    
         if (!username || !password) {
             setError('Por favor, preencha todos os campos.');
             return;
         }
-
+    
         try {
             const response = await api.post('/login', { 
                 username, 
                 password
             });
-
-            const { token } = response.data;
-            saveToken(token);
-
+    
+            const { token, expiresIn, userId } = response.data; // Suponha que `userId` é retornado pela API
+            saveToken(token, expiresIn, userId); // Passa userId para a função saveToken
+    
             window.alert('Login bem-sucedido!');
             navigate('/home');
-
+    
             console.log('Login success:', response.data);
-
+    
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const apiError = error as ApiError;
@@ -70,7 +73,7 @@ export default function SignIn() {
                 console.log('Login error:', error);
             }
         }
-    }
+    }       
 
     function handleSignUpClick() {
         navigate('/signup');
