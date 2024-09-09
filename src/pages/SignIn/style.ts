@@ -3,16 +3,44 @@ import { defaultTheme } from "../../global/styles/default";
 
 export const Conteiner = styled.div`
     width: 100%;
-    height: 720px;
+    height: 750px;
     display: flex;
     flex-direction: row;
     background-color: ${defaultTheme.colors.base.gray400};
+
+    @media (max-width: 1280px) {
+        height: 750px;
+    }
+
+    @media (max-width: 884px) {
+        height: 1010px;
+        /* align-items: center; */
+    }
+
+    @media (max-width: 820px) {
+        height: 1140px;
+        /* align-items: center; */
+    }
 `
 
 export const DivRetangulo = styled.div`
     width: 438px;
     height: 100%;
     background-color: ${defaultTheme.colors.principal.purpleDark};
+
+    @media (min-width: 884px) {
+        width: 100%;
+        height: 450px;
+        position: absolute;
+        top: 1px;
+    }
+
+    @media (min-width: 820px) {
+        width: 100%;
+        height: 550px;
+        position: absolute;
+        top: 1px;
+    }
 `
 
 export const DivForms = styled.div`
@@ -23,6 +51,19 @@ export const DivForms = styled.div`
     align-items: center;
     margin-left: 200px;
     margin-top: 180px;
+
+    @media (max-width: 820px) {
+        position: absolute;
+        left: -220px;
+        top: 480px;
+    }
+    
+    @media (min-width: 884px) {
+        position: absolute;
+        left: -210px;
+        top: 420px;
+    }
+
 `
 
 export const ImgParaFundo = styled.img`
@@ -31,6 +72,20 @@ export const ImgParaFundo = styled.img`
     position: relative;
     top: 40px;
     right: -140px;
+
+    @media (min-width: 884px) {
+        height: 500px;
+        position: relative;
+        top: 20px;
+        right: -180px;
+    }
+
+    @media (min-width: 820px) {
+        height: 500px;
+        position: relative;
+        top: 20px;
+        right: -180px;
+    }
 `
 
 export const Titule = styled.text`

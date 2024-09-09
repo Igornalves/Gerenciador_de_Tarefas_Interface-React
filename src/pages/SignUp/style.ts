@@ -3,10 +3,14 @@ import { defaultTheme } from "../../global/styles/default";
 
 export const Conteiner = styled.div`
     width: 100%;
-    height: 720px;
+    height: 750px;
     display: flex;
     flex-direction: row;
     background-color: ${defaultTheme.colors.base.gray400};
+
+    @media (min-width: 1280px) {
+        height: 750px;
+    }
 `
 
 export const DivRetangulo = styled.div`
