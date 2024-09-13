@@ -8,19 +8,19 @@ export const Conteiner = styled.div`
     flex-direction: row;
     background-color: ${defaultTheme.colors.base.gray400};
 
-    @media (max-width: 1280px) {
+    /* @media (min-width: 1280px) {
         height: 750px;
     }
 
-    @media (max-width: 884px) {
+    @media (min-width: 884px) {
         height: 1010px;
-        /* align-items: center; */
+        align-items: center;
     }
 
-    @media (max-width: 820px) {
+    @media (min-width: 820px) {
         height: 1140px;
-        /* align-items: center; */
-    }
+        align-items: center;
+    }*/
 `
 
 export const DivRetangulo = styled.div`
@@ -28,7 +28,7 @@ export const DivRetangulo = styled.div`
     height: 100%;
     background-color: ${defaultTheme.colors.principal.purpleDark};
 
-    @media (min-width: 884px) {
+    /* @media (min-width: 884px) {
         width: 100%;
         height: 450px;
         position: absolute;
@@ -40,7 +40,7 @@ export const DivRetangulo = styled.div`
         height: 550px;
         position: absolute;
         top: 1px;
-    }
+    } */
 `
 
 export const DivForms = styled.div`
@@ -52,7 +52,7 @@ export const DivForms = styled.div`
     margin-left: 200px;
     margin-top: 180px;
 
-    @media (max-width: 820px) {
+    /* @media (min-width: 820px) {
         position: absolute;
         left: -220px;
         top: 480px;
@@ -62,7 +62,7 @@ export const DivForms = styled.div`
         position: absolute;
         left: -210px;
         top: 420px;
-    }
+    } */
 
 `
 
@@ -73,7 +73,7 @@ export const ImgParaFundo = styled.img`
     top: 40px;
     right: -140px;
 
-    @media (min-width: 884px) {
+    /* @media (min-width: 884px) {
         height: 500px;
         position: relative;
         top: 20px;
@@ -85,7 +85,7 @@ export const ImgParaFundo = styled.img`
         position: relative;
         top: 20px;
         right: -180px;
-    }
+    } */
 `
 
 export const Titule = styled.text`
