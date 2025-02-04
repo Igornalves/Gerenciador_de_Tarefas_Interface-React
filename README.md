@@ -1,27 +1,26 @@
-# Gerenciador de Tarefas 
+# Task Manager
 
-Bom esse Projeto se refere ao desenvimento de uma interface para Criacao de uma gestor de tarefa simples que possuir o objetivo de apresentar a tarefa, concluir a tarefa e deletar a tarefa.
+Well, this project refers to the development of an interface for creating a simple task manager that has the objective of presenting the task, completing the task and deleting the task.
 
-## Índice
+## Index
 
-- [Tecnologias e Ferramentas Utilizadas](#tecnologias-e-ferramentas-utilizadas)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação e Configuração](#instalação-e-configuração)
-- [Execução do Projeto](#execução-do-projeto)
+- [Technologies and Tools Used](#technologies-and-tools-used)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation and Configuration](#installation-and-configuration)
+- [Project Execution](#project-execution)
 
+## Technologies and Tools Used
 
-## Tecnologias e Ferramentas Utilizadas 
+Several technologies were used in the project to develop the interfaces.
 
-Foi utilizado no projeto varias tecnologias para o desenvolvimento das interfaces.
-
-<div style="display: inline_block"  align="center">
-  <img align="center" alt="TypeScript" height="49" width="51" src="https://skillicons.dev/icons?i=typescript">
-  <img align="center" alt="React" height="49" width="51" src="https://skillicons.dev/icons?i=react">
-  <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=nodejs">
-  <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=figma">
-  <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=styledcomponents">
-  <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=vercel">
+<div style="display: inline_block" align="center">
+ <img align="center" alt="TypeScript" height="49" width="51" src="https://skillicons.dev/icons?i=typescript">
+ <img align="center" alt="React" height="49" width="51" src="https://skillicons.dev/icons?i=react">
+ <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=nodejs">
+ <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=figma">
+ <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=styledcomponents">
+<img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=vercel">
 </div>
 
 <br>
@@ -34,59 +33,59 @@ Foi utilizado no projeto varias tecnologias para o desenvolvimento das interface
 - vercel
 - Figma
 
-## Estrutura do Projeto
+## Project Structure
 
-Toda a sua arquitetura de pagina e seu desing foi feito como prototipacao no Figma Community
-onde foi acompanhado o processo de criacao da interface e tambem para implementacao para ser algo parecido
+The entire page architecture and design was done as a prototype in the Figma Community
+where the interface creation process was followed and also for implementation to be something similar
 
-### Telas de Login
+### Login Screens
 
-<img src='./src/assets/Captura de tela 2024-08-31 174016.png'>
+<img src='./src/assets/Screenshot 2024-08-31 174016.png'>
 <img src='./src/assets/Captura de tela 2024-08-31 174027.png'>
 
-### Tela da Interface Completa 
+### Full Interface Screenshot
 
 <img src='./src/assets/Captura de tela 2024-08-31 174006.png'>
 <img src='./src/assets/Captura de tela 2024-08-31 174120.png'>
 
-## Pré-requisitos
+## Prerequisites
 
-Algums Pré-requisitos importantes para vc poder rodar o projeto na sua maquina local seria vc ter instalado as seguintes ferramentas que sao:
+Some important prerequisites for you to be able to run the project on your local machine would be to have the following tools installed:
 
-<div style="display: inline_block"  align="center">
-  <img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=nodejs">
+<div style="display: inline_block" align="center">
+<img align="center" alt="Python" height="49" width="51" src="https://skillicons.dev/icons?i=nodejs">
 </div>
 
 <br>
 
 - Node.js
 
-## Instalação e Configuração
+## Installation and Configuration
 
-primeiro passo para vc conseguir executar o projeto de forma local seria usando o git instalado na sua maquina para fazer um clone do projeto para alguma pasta que vc deseja fazer isso.
+The first step to run the project locally would be to use git installed on your machine to clone the project to a folder where you want to do this.
 
-crie uma pasta:
+create a folder:
 
 <Img src='https://www.ciabyte.com.br/imagens/pastas-windows-explorer.png'>
 
-Apos cria sua pasta vc vai entra no vscode para utilizar o seguinte comando no terminal
+After creating your folder, you will enter vscode to use the following command in the terminal
 
 ```powershell
 git clone https://github.com/Igornalves/Gerenciador_de_Tarefas_Interface-React.git
 ```
 
-### Excutando o Projeto de forma local
+### Running the Project Locally
 
-Com o projeto ja estando clonado vc agora vc poder instalar todas as dependencias do projeto usando o seguinte comandado
+With the project already cloned, you can now install all the project's dependencies using the following command
 
 ```terminal
-npm install 
+npm install
 ```
 
-agora com todas as dependencias instaladas vc pode executar o projeto de forma completa 
+Now that all the dependencies are installed, you can run the project completely
 
 ```
 npm run dev
 ```
 
-Desta forma agora vc podera usar o site e tambem fazer alteracoes no codigo fonte do projeto.
+This way, you will now be able to use the website and also make changes to the project's source code.
